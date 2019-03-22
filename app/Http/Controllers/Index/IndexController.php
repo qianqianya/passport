@@ -140,11 +140,11 @@ class IndexController extends Controller
             ];
             return $response;
         }
-        $pas = $userInfo->password;
+        $pas = $userInfo->pwd;
         if(password_verify($pwd,$pas)){
-            $uid = $userInfo->uid;
-            $key = 'api:token:' . $uid;
-            $token = substr(md5(time() + $uid + rand(1000,9999)),10,20);
+            $id = $userInfo->id;
+            $key = 'api:token:' . $id;
+            $token = substr(md5(time() + $id + rand(1000,9999)),10,20);
             Redis::set($key,$token);
             Redis::setTimeout($key,60*60*24*7);
             $response = [
