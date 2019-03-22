@@ -18,12 +18,12 @@ Route::get('/', function () {
 //登录
 Route::post('login','Index\IndexController@login');
 Route::get('login','Index\IndexController@loginView');
-Route::post('apiLogin','Index\IndexController@apiLogin');
+Route::any('apiLogin','Index\IndexController@apiLogin');
 
 //注册
 Route::post('register','Index\IndexController@register');
 Route::get('register','Index\IndexController@registerView');
-Route::post('apiRegister','Index\IndexController@apiRegister');
+Route::any('apiRegister','Index\IndexController@apiRegister');
 
 
 
