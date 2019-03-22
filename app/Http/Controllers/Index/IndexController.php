@@ -124,4 +124,78 @@ class IndexController extends Controller
         ];
         return view('index.register',$info);
     }
+
+    public function apiLogin(Request $request)
+    {
+        $name = $request->input('u_name');
+        $password = $request->input('u_pwd');
+        $where=[
+            'name'=>$name
+        ];
+        $userInfo=UserModel::where($where)->first();
+        if(empty($userInfo)){
+            $response = [
+                'errno' =>  40001,
+                'msg'   =>  '用户名不存在'
+            ];
+            return $response;
+        }
+        $pas = $userInfo->password;
+        if(password_verify($password,$pas)){
+            $uid = $userInfo->uid;
+            $key = 'api:token:' . $uid;
+            $token = substr(md5(time() + $uid + rand(1000,9999)),10,20);
+            Redis::set($key,$token);
+            Redis::setTimeout($key,60*60*24*7);
+            $response = [
+                'errno' =>  0,
+                'msg'   =>  '登陆成功',
+                'token' =>  $token
+            ];
+        }else{
+            $response = [
+                'errno' =>  40002,
+                'msg'   =>  '登录失败'
+            ];
+        }
+        return $response;
+    }
+
+    public function apiRegister(Request $request)
+    {
+        $name=$request->input('name');
+        $tel=$request->input('tel');
+        $email=$request->input('email');
+        $pwd=$request->input('pwd');
+
+        $re=UserModel::where(['email'=>$email])->first();
+        if($re){
+            $response = [
+                'errno' =>  40004,
+                'msg'   =>  '邮箱已存在'
+            ];
+            return $response;
+        }
+        $pas=password_hash($pwd,PASSWORD_BCRYPT);
+        $data=[
+            'name'=>$name,
+            'email'=>$email,
+            'tel'=>$tel,
+            'pwd'=>$pas,
+            'atime'=>time(),
+        ];
+        $id=UserModel::insertGetId($data);
+        if($id){
+            $response = [
+                'errno' =>  0,
+                'msg'   =>  '注册成功'
+            ];
+        }else{
+            $response = [
+                'errno' =>  40006,
+                'msg'   =>  '注册失败'
+            ];
+        }
+        return $response;
+    }
 }
