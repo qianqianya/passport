@@ -15,15 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//登录
-Route::post('login','Index\IndexController@login');
-Route::get('login','Index\IndexController@loginView');
-Route::any('apiLogin','Index\IndexController@apiLogin');
-
-//注册
-Route::post('register','Index\IndexController@register');
-Route::get('register','Index\IndexController@registerView');
-Route::any('apiRegister','Index\IndexController@apiRegister');
+Route::post('/api/passport', 'User\UserController@passport');
 
 
 

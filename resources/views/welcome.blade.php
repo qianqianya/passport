@@ -68,6 +68,8 @@
                 <div class="top-right links">
                     <a href="{{url('/login')}}">Login</a>
                     <a href="{{url('/register')}}">Register</a>
+                    {{--<a href="http://igg.anjingdehua.cn/login">Login</a>--}}
+                    {{--<a href="http://igg.anjingdehua.cn/register">Register</a>--}}
                 </div>
 
             <div class="content">
