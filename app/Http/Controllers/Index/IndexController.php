@@ -127,10 +127,10 @@ class IndexController extends Controller
 
     public function apiLogin(Request $request)
     {
-        $name = $request->input('u_name');
-        $password = $request->input('u_pwd');
+        $email = $request->input('email');
+        $pwd = $request->input('pwd');
         $where=[
-            'name'=>$name
+            'email'=>$email
         ];
         $userInfo=UserModel::where($where)->first();
         if(empty($userInfo)){
@@ -141,7 +141,7 @@ class IndexController extends Controller
             return $response;
         }
         $pas = $userInfo->password;
-        if(password_verify($password,$pas)){
+        if(password_verify($pwd,$pas)){
             $uid = $userInfo->uid;
             $key = 'api:token:' . $uid;
             $token = substr(md5(time() + $uid + rand(1000,9999)),10,20);
