@@ -25,12 +25,12 @@ class UserController extends Controller
                 //记录web记录token
                 if($type==1){
                     $redis_key_web_token='str:u:token:web'.$u_pwd->u_id;
-                    Redis::delete();
+                    Redis::flushAll();
                     Redis::set($redis_key_web_token,$token);
                     Redis::expire($redis_key_web_token,86400);
-                }elseif($type==2){
+                }else if($type==2){
                     $redis_key_web_token='str:u:token:app'.$u_pwd->u_id;
-                    Redis::delete();
+                    Redis::flushAll();
                     Redis::set($redis_key_web_token,$token);
                     Redis::expire($redis_key_web_token,86400);
                 }
