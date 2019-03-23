@@ -22,16 +22,13 @@ class UserController extends Controller
             if($u_pwd['u_pwd']==$pwd){
                 $token = substr(md5(time().mt_rand(1,99999)),10,10);
                 //记录web记录token
-                $redis_key_web_token='str:u:token:web'.$u_pwd->u_id;
+                $redis_key_web_token='str:u:token:app'.$u_pwd->u_id;
                 Redis::del($redis_key_web_token);
                 Redis::hset($redis_key_web_token,'and',$token);
                 $data=[
                     'token'=>$token
                 ];
-                $res=json_encode($data,true);
-                if($res){
-                    echo '登陆成功';
-                }
+                echo json_encode($data);
             }else{
                 $data=[
                     'error'=>'密码错误'
