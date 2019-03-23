@@ -24,11 +24,14 @@ class UserController extends Controller
                 //记录web记录token
                 $redis_key_web_token='str:u:token:app'.$u_pwd->u_id;
                 Redis::del($redis_key_web_token);
-                Redis::hset($redis_key_web_token,111,$token);
+                Redis::hset($redis_key_web_token,222,$token);
                 $data=[
                 'token'=>$token
                 ];
-                echo json_encode($data);
+                $res=json_encode($data,true);
+                if($res){
+                    echo '登陆成功';
+                }
             }else{
                 $data=[
                 'error'=>'2222'
