@@ -24,20 +24,20 @@ class UserController extends Controller
                 //记录web记录token
                 $redis_key_web_token='str:u:token:web'.$u_pwd->u_id;
                 Redis::del($redis_key_web_token);
-                Redis::hset($redis_key_web_token,111,$token);
+                Redis::hset($redis_key_web_token,'and',$token);
                 $data=[
-                'token'=>$token
+                    'token'=>$token
                 ];
                 echo json_encode($data);
             }else{
                 $data=[
-                'error'=>'2222'
+                    'error'=>'密码错误'
                 ];
                 echo json_encode($data);
             }
         }else{
             $data=[
-            'error'=>'11'
+                'error'=>'该用户不存在'
             ];
             echo json_encode($data);
         }
