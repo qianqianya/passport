@@ -23,8 +23,8 @@ class UserController extends Controller
                 $token = substr(md5(time().mt_rand(1,99999)),10,10);
                 //记录web记录token
                 $redis_key_web_token='str:u:token:app'.$u_pwd->u_id;
-                Redis::del($redis_key_web_token);
-                Redis::set($redis_key_web_token,$token);
+                Redis::hdel($redis_key_web_token);
+                Redis::hset($redis_key_web_token,$token);
                 $data=[
                     'token'=>$token
                 ];
