@@ -28,7 +28,10 @@ class UserController extends Controller
                 $data=[
                     'token'=>$token
                 ];
-                echo json_encode($data);
+                $res=json_encode($data,true);
+                if($res){
+                    echo '登陆成功';
+                }
             }else{
                 $data=[
                     'error'=>'密码错误'
