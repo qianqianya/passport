@@ -17,5 +17,10 @@ Route::get('/', function () {
 
 Route::post('/api/passport', 'User\UserController@passport');
 
+Route::post('/api/token', 'User\UserController@passport');
+
+Route::post('/api/quit', 'User\UserController@passport');
+
+
 
 
