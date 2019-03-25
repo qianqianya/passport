@@ -26,7 +26,8 @@ class UserController extends Controller
                 Redis::hdel($redis_key_web_token);
                 Redis::hset($redis_key_web_token,111,$token);
                 $data=[
-                    'token'=>$token
+                    'token'=>$token,
+                    'u_id'=>$u_pwd->u_id
                 ];
                 $res=json_encode($data,true);
                 if($res){
