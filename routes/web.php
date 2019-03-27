@@ -15,9 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::post('/api/passport', 'User\UserController@passport');
+Route::post('/api/passport', 'User\UserController@passport');
 
-Route::post('/api/login', 'User\UserController@login');
+//Route::post('/api/login', 'User\UserController@login');
 
 Route::post('/api/token', 'User\UserController@passport');
 

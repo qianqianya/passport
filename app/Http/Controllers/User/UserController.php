@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Redis;
 
 class UserController extends Controller
 {
-   /* public function passport(Request $request)
+   public function passport(Request $request)
     {
         $email=$request->input('u_email');
         $pwd=$request->input('u_pwd');
@@ -45,45 +45,8 @@ class UserController extends Controller
             ];
             echo json_encode($data);
         }
-    }*/
-    public function login(Request $request)
-    {
-        $email=$request->input('u_email');
-        $pwd=$request->input('u_pwd');
-
-        $where=[
-            'u_email'=>$email
-        ];
-        $u_pwd=UserModel::where($where)->first();
-        if($u_pwd){
-            if($u_pwd['u_pwd']==$pwd){
-                $token = substr(md5(time().mt_rand(1,99999)),10,10);
-                setcookie('u_id',$u_pwd['u_id'],time()+86400,'/','',false,true);
-                setcookie('token',$token,time()+86400,'/center','',false,true);
-
-                request()->session()->put('u_token',$token);
-                request()->session()->put('u_id',$u_pwd['u_id']);
-                $data=[
-                    'token'=>$token,
-                    'u_id'=>$u_pwd['u_id']
-                ];
-                $res=json_encode($data,true);
-                if($res) {
-                    echo '登录成功';
-                }
-            }else{
-                $data=[
-                    'error'=>1111
-                ];
-                var_dump($data);
-            }
-        }else{
-            $data=[
-                'error'=>2222
-            ];
-            var_dump($data);
-        }
     }
+
 
     //用户中心验证
     public function token()
