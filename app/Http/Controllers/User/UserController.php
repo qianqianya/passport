@@ -55,7 +55,7 @@ class UserController extends Controller
             $where=[
                 'u_email'=>$email
             ];
-            $u_pwd=userModel::where($where)->first();
+            $u_pwd=UserModel::where($where)->first();
             if($u_pwd){
                 if(password_verify($pwd,$u_pwd['u_pwd'])){
                     $token = substr(md5(time().mt_rand(1,99999)),10,10);
@@ -74,15 +74,15 @@ class UserController extends Controller
                     }
                 }else{
                     $data=[
-                        'error'=>'密码错误'
+                        'error'=>1111
                     ];
-                    echo json_encode($data);
+                    var_dump($data);
                 }
             }else{
                 $data=[
-                    'error'=>'该用户不存在'
+                    'error'=>2222
                 ];
-                echo json_encode($data);
+                var_dump($data);
             }
         }
     }
