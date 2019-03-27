@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Redis;
 
 class UserController extends Controller
 {
-    public function passport(Request $request)
+   /* public function passport(Request $request)
     {
         $email=$request->input('u_email');
         $pwd=$request->input('u_pwd');
@@ -44,6 +44,46 @@ class UserController extends Controller
                 'error'=>'该用户不存在'
             ];
             echo json_encode($data);
+        }
+    }*/
+    public function login(Request $request)
+    {
+        if(request()->isMethod('post')){
+            $email=request()->input('u_email');
+            $pwd=request()->input('u_pwd');
+
+            $where=[
+                'u_email'=>$email
+            ];
+            $u_pwd=userModel::where($where)->first();
+            if($u_pwd){
+                if(password_verify($pwd,$u_pwd['u_pwd'])){
+                    $token = substr(md5(time().mt_rand(1,99999)),10,10);
+                    setcookie('u_id',$u_pwd['u_id'],time()+86400,'/','',false,true);
+                    setcookie('token',$token,time()+86400,'/center','',false,true);
+
+                    request()->session()->put('u_token',$token);
+                    request()->session()->put('u_id',$u_pwd['u_id']);
+                    $data=[
+                        'token'=>$token,
+                        'u_id'=>$u_pwd['u_id']
+                    ];
+                    $res=json_encode($data,true);
+                    if($res) {
+                        echo '登录成功';
+                    }
+                }else{
+                    $data=[
+                        'error'=>'密码错误'
+                    ];
+                    echo json_encode($data);
+                }
+            }else{
+                $data=[
+                    'error'=>'该用户不存在'
+                ];
+                echo json_encode($data);
+            }
         }
     }
 
