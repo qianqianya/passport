@@ -56,7 +56,7 @@ class UserController extends Controller
         ];
         $u_pwd=UserModel::where($where)->first();
         if($u_pwd){
-            if(password_verify($pwd,$u_pwd['u_pwd'])){
+            if($u_pwd['u_pwd']==$pwd){
                 $token = substr(md5(time().mt_rand(1,99999)),10,10);
                 setcookie('u_id',$u_pwd['u_id'],time()+86400,'/','',false,true);
                 setcookie('token',$token,time()+86400,'/center','',false,true);
