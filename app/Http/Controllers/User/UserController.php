@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Redis;
 
 class UserController extends Controller
 {
-   /*public function passport(Request $request)
+   public function passport(Request $request)
     {
         $email=$request->input('u_email');
         $pwd=$request->input('u_pwd');
@@ -45,8 +45,8 @@ class UserController extends Controller
             ];
             echo json_encode($data);
         }
-    }*/
-    public function login(Request $request)
+    }
+   /* public function login(Request $request)
     {
         $email=$request->input('u_email');
         $pwd=$request->input('u_pwd');
@@ -83,7 +83,7 @@ class UserController extends Controller
             ];
             echo json_encode($data);
         }
-    }
+    }*/
 
 
     //用户中心验证
